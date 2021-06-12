@@ -95,7 +95,7 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(Melee, "melee attack rate bonus", 0.6);								// +40% Faster swing speed
 	TF2Attrib_SetByName(Melee, "heal on kill", 100.0);										// +100 HP per kill
 	TF2Attrib_SetByName(Melee, "damage bonus", 1.20);											// +20% Damage bonus
-	TF2Attrib_SetByName(client, "health regen", 10.0);										// +4 Health regen per second
+	TF2Attrib_SetByName(client, "health regen", 10.0);										// +10 Health regen per second
 	TF2Attrib_SetByName(client, "move speed bonus", 1.3);									// +30% Faster movement speed
 	TF2Attrib_SetByName(client, "increased jump height", 1.2);								// +20% Higher jump
 	TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.25);					// +75% Dmg resistances from Bullets
