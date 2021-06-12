@@ -1,7 +1,7 @@
 # TF2 MvM Bot Upgrades
 A Team Fortress 2 Plugin that gives Bots (Fake Clients) attributes for MvM. This was an edit of pongo1231's plugin for his server. 
 
-I wanted to improve it to be more flexible and have more variety ( i guess? ) with bots getting attributes, and the fix the issue were attributes would stack on each other. This plugin can be customizable via notepad or any editor
+I wanted to improve it to be more flexible and have more variety ( i guess? ) with bots getting attributes, and to fix the issue were attributes would stack on each other if bots would swtich weapons. This plugin can be customizable via notepad or any editor.
 
 
 # Requirements
