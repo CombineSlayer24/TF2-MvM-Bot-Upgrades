@@ -13,7 +13,7 @@ public Plugin myinfo =
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player (Edited)",
 	description = "Gives TFBots (Fake Clients) on RED team upgrades suitable for Mann Vs Machine. Oringally by pongo1231, updated by Pyri and Anonymous Player.",
 	version = "1.2",
-	url = "N/A"
+	url = "N/A",
 };
 
 public void OnPluginStart() {
