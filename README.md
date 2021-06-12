@@ -16,7 +16,7 @@ I wanted to improve it to be more flexible and have more variety ( i guess? ) wi
 * [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you make make all bots ready up]
 
 # How does this work?
-When you your first download the requirements needed, you first start your server in a MvM map. Any bots that you add, TFBots (Default), or any Third-Party Bots like RCBots2. After 5 seconds from spawning/repsawning, they will receive upgrades to their weapons. And it's all done.  
+When you your first download the requirements needed, you can start your server in a MvM map. Any bots that you add, TFBots (Default), or any Third-Party Bots like RCBots2, as long as it has BOT or the heavy-bot icon in the PING section. After 5 seconds from spawning/repsawning, they will receive upgrades to their weapons. And it's all done.  
 
 # How to change their attirbutes? They are OP.
 With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there will be comments explaining how it works, before where the attributes get applied, theres some explaination on how to add/edit attributes for bots.
