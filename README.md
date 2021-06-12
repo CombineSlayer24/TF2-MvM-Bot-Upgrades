@@ -4,7 +4,7 @@ A Team Fortress 2 Plugin that gives Bots (Fake Clients) attributes for MvM. This
 I wanted to improve it to be more flexible and have more variety (I guess?) with bots getting attributes, and to fix the issue were attributes would stack on each other if bots would swtich weapons. This plugin can be customizable via notepad or any editor.
 
 # Credits
-* [pongo1231](https://github.com/pongo1231) [Oringal plugin]
+* [pongo1231](https://github.com/pongo1231) [Original plugin]
 * [CombineSlayer24](https://github.com/CombineSlayer24) [For editing]
 * [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
 
@@ -14,7 +14,7 @@ I wanted to improve it to be more flexible and have more variety (I guess?) with
 * [Nosoop's Attributes](https://github.com/nosoop/tf2attributes)
 * [TF2Wearables](https://github.com/nosoop/sourcemod-tf2wearables)
 
-# Optional Plugins 
+# Optional Plugins (To enhance your experience)
 * [Give Bots Weapons](https://forums.alliedmods.net/showthread.php?t=287668) [Gives Bots random weapons, I would recommend Bot Overhual's version]
 * [Give Bots Cosmetics](https://forums.alliedmods.net/showthread.php?p=2456267) [Gives bots random cosmetics, I would recommend Bot Overhual's version]
 * [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you make make all bots ready up]
