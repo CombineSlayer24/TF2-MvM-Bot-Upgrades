@@ -22,3 +22,8 @@ With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there 
 * You can edit the value from instead +75% to +100%. Just set what it is from "1.75", to "2.0".
 * If you see "Client" instead of the weapon slot name, the upgrade will be applied on the Character Upgrades section
 * Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes )
+
+# Credits
+* [https://github.com/pongo1231](pongo1231) [Oringal plugin]
+* [https://github.com/CombineSlayer24](CombineSlayer24) [For editing]
+* [https://github.com/caxanga334](caxanga334) [For code help and more]
