@@ -24,6 +24,6 @@ With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there 
 * Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes )
 
 # Credits
-* [https://github.com/pongo1231](pongo1231) [Oringal plugin]
-* [https://github.com/CombineSlayer24](CombineSlayer24) [For editing]
-* [https://github.com/caxanga334](caxanga334) [For code help and more]
+* [pongo1231](https://github.com/pongo1231) [Oringal plugin]
+* [CombineSlayer24](https://github.com/CombineSlayer24) [For editing]
+* [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
