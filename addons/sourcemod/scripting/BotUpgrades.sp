@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player (Edited)",
 	description = "Gives TFBots (Fake Clients) on RED team upgrades suitable for Mann Vs Machine. Oringally by pongo1231, updated by Pyri and Anonymous Player.",
-	version = "1.1",
+	version = "1.2",
 	url = "N/A"
 };
 
@@ -74,13 +74,13 @@ public Action Timer_PlayerSpawn(Handle timer, int userid)
 // This function will apply the attributes to the bots
 void ApplyAttributesToClient(int client)
 {
-	if(!IsClientInGame(client))																	// Check if the Client is In-Game
+	if(!IsClientInGame(client))																	// Checks if the client is In-Game
 		return;
 
-	if(!IsFakeClient(client))																		// Checks if the Client is a Fake Client (Bot)
+	if(!IsFakeClient(client))																		// Checks if the client is a Bot
 		return;
 
-	if(TF2_GetClientTeam(client) != TFTeam_Red)													// Checks if the Bots are on RED Team
+	if(TF2_GetClientTeam(client) != TFTeam_Red)													// Checks if the client are on RED Team
 		return;
 
 	int Primary = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Primary, true);			// Sets attributes for Primary Weapons
@@ -94,6 +94,7 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(Melee, "critboost on kill", 4.0);									// Gain 4 seconds of Critical Hits after kill
 	TF2Attrib_SetByName(Melee, "melee attack rate bonus", 0.6);								// +40% Faster swing speed
 	TF2Attrib_SetByName(Melee, "heal on kill", 100.0);										// +100 HP per kill
+	TF2Attrib_SetByName(Melee, "damage bonus", 1.20);											// +20% Damage bonus
 	TF2Attrib_SetByName(client, "health regen", 10.0);										// +4 Health regen per second
 	TF2Attrib_SetByName(client, "move speed bonus", 1.3);									// +30% Faster movement speed
 	TF2Attrib_SetByName(client, "increased jump height", 1.2);								// +20% Higher jump
@@ -199,9 +200,9 @@ void ApplyAttributesToClient(int client)
 		case TFClass_Engineer: {
 			TF2Attrib_SetByName(client, "metal regen", 25.0);								// +25 Metal regen per 5 seconds
 			/** Engineer Primary Attributes */
-			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);					// +1 point of Projectile Penetration
+			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);						// +1 point of Projectile Penetration
 			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);							// +40% Faster fire rate
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);						// +60% Faster reloading
+			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);							// +60% Faster reloading
 			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);								// +50 HP per kill
 			TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
 			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);					// +150% Maximum Ammo
@@ -211,26 +212,23 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);					// +1 Point of Projectile Penetration
 			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);							// +100 HP per kill
 			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);							// +40% Faster fire rate
-			/** Engineer Melee Attributes */
-			//TF2Attrib_SetByName(Melee, "critboost on kill", 4.0);							// Gain 4 seconds of Critical Hits after kill
-			//TF2Attrib_SetByName(Melee, "melee attack rate bonus", 0.6);					// +40% Faster swing speed
-			//TF2Attrib_SetByName(Melee, "heal on kill", 100.0);							// +100 HP per kill
+			/** Engineer PDA Attributes */
 			int iPDA = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Unknown2, true);		// Apply PDA attributes to the builder PDA
 			if(iPDA != -1)
 			{
 				TF2Attrib_SetByName(iPDA, "engy sentry fire rate increased", 0.7);			// +30% Faster Sentry fire
-				TF2Attrib_SetByName(iPDA, "engy building health bonus", 4.0);				// +300% Engy building health
-				TF2Attrib_SetByName(iPDA, "engineer sentry build rate multiplier", 1.5);	// +50% Faster sentry setup
+				TF2Attrib_SetByName(iPDA, "engy building health bonus", 4.0);					// +300% Engy building health
+				TF2Attrib_SetByName(iPDA, "engineer sentry build rate multiplier", 1.5);		// +50% Faster sentry setup
 				TF2Attrib_SetByName(iPDA, "engy dispenser radius increased", 4.0);			// +300% Dispenser Range
 				TF2Attrib_SetByName(iPDA, "maxammo metal increased", 2.0);					// +100% Max Metal
-				TF2Attrib_SetByName(iPDA, "bidirectional teleport", 1.0);					// 2-way Teleporter
+				TF2Attrib_SetByName(iPDA, "bidirectional teleport", 1.0);						// 2-way Teleporter
 			}
 		}
 		case TFClass_Medic: {
 			/** Medic Primary Attributes */
 			TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 3.0);					// +200% Clip size bonus
 			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);							// +40% Faster fire rate
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);						// +60% Faster reloading
+			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);							// +60% Faster reloading
 			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);								// +50 HP per kill
 			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);					// +150% Maximum Ammo
 			/** Medic Special Attributes */
@@ -271,10 +269,9 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Secondary, "heal on kill", 50.0);							// +50 HP per kill
 			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);				// +150% Maximum Ammo
 			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
-			//TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);						// +60% Faster reloading
 			/** Spy Special Attributes */
 			TF2Attrib_SetByName(Melee, "cloak consume rate decreased", 0.3);				// +70% Less cloak consumed
-			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);							// 100 points of armor piercing
+			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);							// 100 points of armor piercing (Spy AI will insta kill regardless)
 			int iSapper = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Building, true);	// Apply sapper attributes
 			if(iSapper != -1) {
 				TF2Attrib_SetByName(iSapper, "robo sapper", 3.0);							// +3 Points Robo Sapper
