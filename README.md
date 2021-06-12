@@ -1,8 +1,12 @@
 # TF2 MvM Bot Upgrades
 A Team Fortress 2 Plugin that gives Bots (Fake Clients) attributes for MvM. This was an edit of pongo1231's plugin for his server. 
 
-I wanted to improve it to be more flexible and have more variety ( i guess? ) with bots getting attributes, and to fix the issue were attributes would stack on each other if bots would swtich weapons. This plugin can be customizable via notepad or any editor.
+I wanted to improve it to be more flexible and have more variety (I guess?) with bots getting attributes, and to fix the issue were attributes would stack on each other if bots would swtich weapons. This plugin can be customizable via notepad or any editor.
 
+# Credits
+* [pongo1231](https://github.com/pongo1231) [Oringal plugin]
+* [CombineSlayer24](https://github.com/CombineSlayer24) [For editing]
+* [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
 
 # Requirements
 * [Sourcemod](https://www.sourcemod.net/)
@@ -27,8 +31,3 @@ With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there 
 * You can edit the value from instead +75% to +100%. Just set what it is from "1.75", to "2.0".
 * If you see "Client" instead of the weapon slot name, the upgrade will be applied on the Character Upgrades section
 * Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes )
-
-# Credits
-* [pongo1231](https://github.com/pongo1231) [Oringal plugin]
-* [CombineSlayer24](https://github.com/CombineSlayer24) [For editing]
-* [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
