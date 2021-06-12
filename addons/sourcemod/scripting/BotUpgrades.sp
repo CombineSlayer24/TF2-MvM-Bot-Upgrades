@@ -273,11 +273,11 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Melee, "cloak consume rate decreased", 0.3);				// +70% Less cloak consumed
 			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);							// 100 points of armor piercing (Spy AI will insta kill regardless)
 			int iSapper = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Building, true);	// Apply sapper attributes
-			if(iSapper != -1) {
+			if(iSapper != -1) 
+			{
 				TF2Attrib_SetByName(iSapper, "robo sapper", 3.0);							// +3 Points Robo Sapper
 				TF2Attrib_SetByName(iSapper, "effect bar recharge rate increased", 0.6);	// +40% Faster recharge rate
 			}
-
 		}
 	}
 
