@@ -3,6 +3,8 @@ A Team Fortress 2 Plugin that gives Bots (Fake Clients) attributes for MvM. This
 
 
 # Requirements
+* [Sourcemod](https://www.sourcemod.net/)
+* [Metamod](https://www.metamodsource.net/)
 * [Nosoop's Attributes](https://github.com/nosoop/tf2attributes)
 * [TF2Wearables](https://github.com/nosoop/sourcemod-tf2wearables)
 
