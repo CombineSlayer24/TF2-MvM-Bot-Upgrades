@@ -17,7 +17,7 @@ I wanted to improve it to be more flexible and have more variety (I guess?) with
 # Optional Plugins (To enhance your experience)
 * [Give Bots Weapons](https://forums.alliedmods.net/showthread.php?t=287668) [Gives Bots random weapons, I would recommend Bot Overhual's version]
 * [Give Bots Cosmetics](https://forums.alliedmods.net/showthread.php?p=2456267) [Gives bots random cosmetics, I would recommend Bot Overhual's version]
-* [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you make make all bots ready up]
+* [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you can make all bots ready up]
 
 # How does this work?
 When you your first download the requirements needed, you can start your server in a MvM map. Any bots that you add, TFBots (Default), or any Third-Party Bots like RCBots2, as long as it has BOT or the heavy-bot icon in the PING section. After 5 seconds from spawning/repsawning, they will receive upgrades to their weapons. And it's all done.  
@@ -30,4 +30,4 @@ With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there 
 * Go to "case TFClass_Sniper", under "Sniper Primary Attributes"
 * You can edit the value from instead +75% to +100%. Just set what it is from "1.75", to "2.0".
 * If you see "Client" instead of the weapon slot name, the upgrade will be applied on the Character Upgrades section
-* Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes )
+* Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes ) 
