@@ -10,9 +10,9 @@
 public Plugin myinfo = 
 {
 	name = "[TF2] MvM Bot Upgrades",
-	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player (Edited)",
+	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Gives TFBots (Fake Clients) on RED team upgrades suitable for Mann Vs Machine. Oringally by pongo1231, updated by Pyri and Anonymous Player.",
-	version = "1.2",
+	version = "1.2.1",
 	url = "N/A",
 };
 
@@ -117,7 +117,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);					// +1 point of Projectile Penetration
 			/** Scout Special Attributes */
 			TF2Attrib_SetByName(Primary, "bullets per shot bonus", 1.25);					// +25% Extra bullets
-			TF2Attrib_SetByName(Primary, "scattergun knockback mult", 1.8);					// +80% Knockback force
+			TF2Attrib_SetByName(Primary, "scattergun knockback mult", 1.6);					// +60% Knockback force
 			TF2Attrib_SetByName(Primary, "heal on hit for rapidfire", 5.0);					// Gain 5 HP per hit w/ primary
 			/** Scout Secondary Attributes */
 			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
@@ -271,7 +271,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
 			/** Spy Special Attributes */
 			TF2Attrib_SetByName(Melee, "cloak consume rate decreased", 0.3);				// +70% Less cloak consumed
-			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);							// 100 points of armor piercing (Spy AI will insta kill regardless)
+			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);							// 100% armor piercing (Spy AI will insta kill regardless)
 			int iSapper = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Building, true);	// Apply sapper attributes
 			if(iSapper != -1) 
 			{
@@ -344,7 +344,8 @@ void ApplyAttributesToClient(int client)
 	{
 		if (client == GetEntPropEnt(GasPasser, Prop_Data, "m_hOwnerEntity"))
 		{
-			TF2Attrib_SetByName(GasPasser, "item_meter_charge_rate", 15.0);					// +15 Seconds recharge
+			//TF2Attrib_SetByName(GasPasser, "item_meter_charge_rate", 15.0);			// +15 Seconds recharge
+			TF2Attrib_SetByName(GasPasser, "mult_item_meter_charge_rate", 0.4);				// +60% Recharge rate
 			TF2Attrib_SetByName(GasPasser, "weapon burn dmg increased", 1.5);				// +50% Afterburn Damage
 		}
 	}
@@ -371,7 +372,6 @@ void ApplyAttributesToClient(int client)
 			//TF2Attrib_SetByName(Drink, "effect bar recharge rate increased", 0.25);		// +75% Faster recharge rate
 		//}
 	//}
-	
 	/** LunchBox = Heavy's Secondary editbles */
 	//int LunchBox = -1;
 	//while ((LunchBox = FindEntityByClassname(LunchBox, "TF_WEAPON_LUNCHBOX")) != -1)
@@ -381,7 +381,6 @@ void ApplyAttributesToClient(int client)
 			//TF2Attrib_SetByName(LunchBox, "effect bar recharge rate increased", 0.35);	// +65% Faster recharge rate
 		//}
 	//}
-	
 	/** Flaregun = Well, you know */
 	//int Flaregun = -1;
 	//while ((Flaregun = FindEntityByClassname(Flaregun, "TF_WEAPON_FLAREGUN")) != -1)
@@ -394,7 +393,6 @@ void ApplyAttributesToClient(int client)
 			//TF2Attrib_SetByName(Flaregun, "faster reload rate", 0.4);						// +60% Faster reloading
 		//}
 	//}
-	
 	/** DemoShield = Demoman's Shields */
 	//int DemoShield = -1;
 	//while ((DemoShield = FindEntityByClassname(DemoShield, "TF_WEARABLE_DEMOSHIELD")) != -1)
