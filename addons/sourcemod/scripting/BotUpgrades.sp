@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Gives TFBots (Fake Clients) on RED team upgrades suitable for Mann Vs Machine. Oringally by pongo1231, updated by Pyri and Anonymous Player.",
-	version = "1.2.1",
+	version = "1.2.2",
 	url = "N/A",
 };
 
@@ -101,7 +101,7 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.25);					// +75% Dmg resistances from Bullets
 	TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.5);						// +50% Dmg resistances from Fire
 	TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);						// +90% Dmg resistances from Critical Hits
-	TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.75);						// +75% Dmg resistances from Blast
+	TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.25);						// +75% Dmg resistances from Blast
 	TF2Attrib_SetByName(client, "max health additive bonus", 50.0);							// +50 Additional health
 	TF2Attrib_SetByName(client, "ammo regen", 0.15);										// +15% Ammo regen
 	
@@ -246,6 +246,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);								// +50 HP per kill
 			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);					// +150% Maximum Ammo
 			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);					// +1 Point of Projectile Penetration
+			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);						// +60% Faster reloading
 			/** Sniper Special Attributes */
 			TF2Attrib_SetByName(Primary, "explosive sniper shot", 3.0);						// +3 Points of Explosive Headshots
 			TF2Attrib_SetByName(Primary, "SRifle Charge rate increased", 1.5);				// +50% Faster scope charge
