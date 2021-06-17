@@ -12,7 +12,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Gives TFBots (Fake Clients) on RED team upgrades suitable for Mann Vs Machine. Oringally by pongo1231, updated by Pyri and Anonymous Player.",
-	version = "1.2.2",
+	version = "1.2.3",
 	url = "N/A",
 };
 
@@ -94,7 +94,7 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(Melee, "critboost on kill", 4.0);									// Gain 4 seconds of Critical Hits after kill
 	TF2Attrib_SetByName(Melee, "melee attack rate bonus", 0.6);								// +40% Faster swing speed
 	TF2Attrib_SetByName(Melee, "heal on kill", 100.0);										// +100 HP per kill
-	TF2Attrib_SetByName(Melee, "damage bonus", 1.20);											// +20% Damage bonus
+	TF2Attrib_SetByName(Melee, "damage bonus", 1.25);											// +20% Damage bonus
 	TF2Attrib_SetByName(client, "health regen", 10.0);										// +10 Health regen per second
 	TF2Attrib_SetByName(client, "move speed bonus", 1.3);									// +30% Faster movement speed
 	TF2Attrib_SetByName(client, "increased jump height", 1.2);								// +20% Higher jump
@@ -189,7 +189,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Primary, "attack projectiles", 2.0);						// +2 Points of Attack projectiles
 			TF2Attrib_SetByName(Primary, "projectile penetration heavy", 2.0);				// +2 Points of Projectiles penetration
 			TF2Attrib_SetByName(Primary, "minigun spinup time decreased", 0.8);				// +20% Faster minigun spin
-			/** HeavyWEapons Secondary Attributes */
+			/** HeavyWeapons Secondary Attributes */
 			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
 			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);				// +150% Maximum Ammo
 			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);					// +1 Point of Projectile Penetration
@@ -290,18 +290,21 @@ void ApplyAttributesToClient(int client)
 	* Vice Versa with others listed down here.
 	**/
 	
-	/** Sandman = Well, you know */
+	/** Sandman = Ha, balls charge faster. If only Valve added a MvM Sandman where it kept the old stun.
+	* Imo, the old stun was better, it made you want to move to avoid being stunned
+	* just like Gloves of running urgently MvM, sad.
+	*/
 	int Sandman = -1;
 	while ((Sandman = FindEntityByClassname(Sandman, "TF_WEAPON_BAT_WOOD")) != -1)
 	{
 		if (client == GetEntPropEnt(Sandman, Prop_Data, "m_hOwnerEntity"))
 		{
-			TF2Attrib_SetByName(Sandman, "effect bar recharge rate increased", 0.25);		// +75% Faster recharge rate
-			TF2Attrib_SetByName(Sandman, "mark for death", 1.0);
+			TF2Attrib_SetByName(Sandman, "effect bar recharge rate increased", 0.2);		// +80% Faster recharge rate
+			TF2Attrib_SetByName(Sandman, "mark for death", 1.0);							// Mini Crits upon a ball hit or bat hit.
 		}
 	}
 	
-	/** BuffBanner = Well, you know */
+	/** BuffBanner = Works for Buff Banner, Battalions Backup and the Concheror*/
 	int BuffBanner = -1;
 	while ((BuffBanner = FindEntityByClassname(BuffBanner, "TF_WEAPON_BUFF_ITEM")) != -1)
 	{
@@ -310,7 +313,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(BuffBanner, "increase buff duration", 1.5);					// +50% Buff duration bonus
 		}
 	}
-	/** Bow = Well, you know */
+	/** Bow = TFBot Sniper's are somewhat deadly with the Huntsman. */
 	int Bow = -1;
 	while ((Bow = FindEntityByClassname(Bow, "TF_WEAPON_COMPOUND_BOW")) != -1)
 	{
@@ -339,7 +342,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(MadMilk, "applies snare effect", 0.65);						// -35% Speed on target 
 		}
 	}
-	/** GasPasser = Well, you know */
+	/** GasPasser = TFBot Pyro's know how to Gas Passers. */
 	int GasPasser = -1;
 	while ((GasPasser = FindEntityByClassname(GasPasser, "TF_WEAPON_JAR_GAS")) != -1)
 	{
@@ -347,7 +350,7 @@ void ApplyAttributesToClient(int client)
 		{
 			//TF2Attrib_SetByName(GasPasser, "item_meter_charge_rate", 15.0);			// +15 Seconds recharge
 			TF2Attrib_SetByName(GasPasser, "mult_item_meter_charge_rate", 0.4);				// +60% Recharge rate
-			TF2Attrib_SetByName(GasPasser, "weapon burn dmg increased", 1.5);				// +50% Afterburn Damage
+			TF2Attrib_SetByName(GasPasser, "weapon burn dmg increased", 2.5);				// +150% Afterburn Damage
 		}
 	}
 	/** CowMangler = Well, you know */
