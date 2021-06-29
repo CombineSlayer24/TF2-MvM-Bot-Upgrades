@@ -29,6 +29,6 @@ With any code editor (Notepad++ or your preference), open BotUpgrades.sp, there 
 * To do, if you want to say, give/edit Sniper's Primary damage
 * Go to "case TFClass_Sniper", under "Sniper Primary Attributes"
 * You can edit the value from instead +75% to +100%. Just set what it is from "1.75", to "2.0".
-* Some values are invert_percentage and percentage. I hope you know what they do ( take a look on [here](https://steamcommunity.com/sharedfiles/filedetails/?id=1234200950)
+* Some values are invert_percentage and percentage. I hope you know what they do, if not then take a look on [here](https://steamcommunity.com/sharedfiles/filedetails/?id=1234200950)
 * If you see "Client" instead of the weapon slot name, the upgrade will be applied on the Character Upgrades section
 * Go to here to find a list of all attributes ( https://wiki.teamfortress.com/wiki/List_of_item_attributes ) 
