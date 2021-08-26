@@ -7,6 +7,8 @@
 #include <tf2attributes> // Requires nosoop's Attributes ( https://github.com/nosoop/tf2attributes )
 #include <tf2wearables> // use tf2 wearables API for getting weapon entity index ( https://github.com/nosoop/sourcemod-tf2wearables/ )
 
+bool playing_mvm = false;
+
 public Plugin myinfo = 
 {
 	name = "[TF2] MvM Bot Upgrades",
@@ -20,6 +22,13 @@ public void OnPluginStart() {
 	HookEvent("post_inventory_application", Event_PostInventory, EventHookMode_Post);
 	HookEvent("mvm_begin_wave", Event_WaveStart, EventHookMode_Post);
 	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
+}
+/** 
+* Checks if the map is Mann Vs Machine.
+* If not, then the plugin will not load.
+**/
+public void OnMapStart() {
+	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") ? true : false;
 }
 
 /** 
@@ -82,6 +91,9 @@ void ApplyAttributesToClient(int client)
 
 	if(TF2_GetClientTeam(client) != TFTeam_Red)													// Checks if the client are on RED Team
 		return;
+		
+	if(!playing_mvm)																				// Checks if the level is a Mann Vs Machine Map 
+		return;
 
 	int Primary = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Primary, true);			// Sets attributes for Primary Weapons
 	int Secondary = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Secondary, true);		// Sets attributes for Secondary Weapons
@@ -97,7 +109,7 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(Melee, "damage bonus", 1.30);											// +30% Damage bonus
 	TF2Attrib_SetByName(client, "health regen", 10.0);										// +10 Health regen per second
 	TF2Attrib_SetByName(client, "move speed bonus", 1.3);									// +30% Faster movement speed
-	TF2Attrib_SetByName(client, "increased jump height", 1.25);								// +25% Higher jump
+	TF2Attrib_SetByName(client, "increased jump height", 1.40);								// +40% Higher jump
 	TF2Attrib_SetByName(client, "dmg taken from bullets reduced", 0.25);					// +75% Dmg resistances from Bullets
 	TF2Attrib_SetByName(client, "dmg taken from fire reduced", 0.5);						// +50% Dmg resistances from Fire
 	TF2Attrib_SetByName(client, "dmg taken from crit reduced", 0.1);						// +90% Dmg resistances from Critical Hits
@@ -117,7 +129,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);					// +1 point of Projectile Penetration
 			/** Scout Special Attributes */
 			TF2Attrib_SetByName(Primary, "bullets per shot bonus", 1.5);					// +50% Extra bullets
-			TF2Attrib_SetByName(Primary, "scattergun knockback mult", 1.6);					// +60% Knockback force
+			TF2Attrib_SetByName(Primary, "scattergun knockback mult", 1.75);					// +75% Knockback force
 			TF2Attrib_SetByName(Primary, "heal on hit for rapidfire", 5.0);					// Gain 5 HP per hit w/ primary
 			/** Scout Secondary Attributes */
 			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);					// +100% Clip size bonus
