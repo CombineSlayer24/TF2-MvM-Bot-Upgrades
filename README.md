@@ -9,14 +9,14 @@ I wanted to improve it to be more flexible and have more variety (I guess?) with
 * [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
 
 # Requirements
-* [Sourcemod](https://www.sourcemod.net/)
-* [Metamod](https://www.metamodsource.net/)
+* [Sourcemod](https://www.sourcemod.net/) (You should already have this)
+* [Metamod](https://www.metamodsource.net/) (You should already have this)
 * [Nosoop's Attributes](https://github.com/nosoop/tf2attributes)
 * [TF2Wearables](https://github.com/nosoop/sourcemod-tf2wearables)
 
 # Optional Plugins (To enhance your experience)
-* [Give Bots Weapons](https://forums.alliedmods.net/showthread.php?t=287668) [Gives Bots random weapons, I would recommend Bot Overhual's version]
-* [Give Bots Cosmetics](https://forums.alliedmods.net/showthread.php?p=2456267) [Gives bots random cosmetics, I would recommend Bot Overhual's version]
+* [Give Bots Weapons](https://forums.alliedmods.net/showthread.php?t=287668) [Gives Bots random weapons,]
+* [Give Bots Cosmetics](https://forums.alliedmods.net/showthread.php?p=2456267) [Gives bots random cosmetics,]
 * [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you can make all bots ready up]
 
 # How does this work?
