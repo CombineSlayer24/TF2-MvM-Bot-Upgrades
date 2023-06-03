@@ -77,7 +77,7 @@ public Action Timer_PlayerSpawn(Handle timer, int userid)
 	if (!client)
 		return Plugin_Stop;
 	
-	ApplyAttributesToClient();
+	ApplyAttributesToClient(client);
 	return Plugin_Stop;
 }
 
