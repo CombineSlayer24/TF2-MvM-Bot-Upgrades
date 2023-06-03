@@ -39,6 +39,10 @@ public void OnMapStart() {
 public Action Event_PostInventory(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
+	
+	if (!client)
+		return Plugin_Continue;
+	
 	ApplyAttributesToClient(client);
 
 	return Plugin_Continue;
@@ -68,7 +72,12 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 
 public Action Timer_PlayerSpawn(Handle timer, int userid)
 {
-	ApplyAttributesToClient(GetClientOfUserId(userid));
+	int client = GetClientOfUserId(userid);
+	
+	if (!client)
+		return Plugin_Stop;
+	
+	ApplyAttributesToClient();
 	return Plugin_Stop;
 }
 
