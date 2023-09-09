@@ -3,13 +3,13 @@
 
 #include <sourcemod>
 #include <tf2_stocks>
-#define REQUIRE_PLUGIN 
+#define REQUIRE_PLUGIN
 #include <tf2attributes>
 #include <tf2wearables>
 
 bool playing_mvm = false;
 
-public Plugin myinfo = 
+public Plugin myinfo =
 {
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
@@ -23,7 +23,7 @@ public void OnPluginStart() {
 	HookEvent("mvm_begin_wave", Event_WaveStart, EventHookMode_Post);
 	HookEvent("player_spawn", Event_PlayerSpawn, EventHookMode_Post);
 }
-/** 
+/**
 * Checks if the map is Mann Vs Machine.
 * If not, then the plugin will not load.
 **/
@@ -31,7 +31,7 @@ public void OnMapStart() {
 	playing_mvm = GameRules_GetProp("m_bPlayingMannVsMachine") ? true : false;
 }
 
-/** 
+/**
 * Apply attributes to bots when post_inventory_application event fires.
 * This event is fired every time the client's loadout is reloading
 * For example: when respawning, when changing classes, using a resupply locker, etc
@@ -39,16 +39,16 @@ public void OnMapStart() {
 public Action Event_PostInventory(Event event, const char[] name, bool dontBroadcast)
 {
 	int client = GetClientOfUserId(event.GetInt("userid"));
-	
+
 	if (!client)
 		return Plugin_Continue;
-	
+
 	ApplyAttributesToClient(client);
 
 	return Plugin_Continue;
 }
 
-/** 
+/**
 * Reapply upgrades when the wave starts
 **/
 public Action Event_WaveStart(Event event, const char[] name, bool dontBroadcast)
@@ -61,7 +61,7 @@ public Action Event_WaveStart(Event event, const char[] name, bool dontBroadcast
 	return Plugin_Continue;
 }
 
-/** 
+/**
 * Reapply upgrades when the player spawns with a delay
 **/
 public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadcast)
@@ -73,15 +73,15 @@ public Action Event_PlayerSpawn(Event event, const char[] name, bool dontBroadca
 public Action Timer_PlayerSpawn(Handle timer, int userid)
 {
 	int client = GetClientOfUserId(userid);
-	
+
 	if (!client)
 		return Plugin_Stop;
-	
+
 	ApplyAttributesToClient(client);
 	return Plugin_Stop;
 }
 
-/** 
+/**
 * You can change/add any attribute you want
 * To do, if you want to say, give/edit Sniper's Primary damage
 * Go to "case TFClass_Sniper", under "Sniper Primary Attributes"
@@ -103,8 +103,8 @@ void ApplyAttributesToClient(int client)
 	// Checks if the client are on RED Team
 	if(TF2_GetClientTeam(client) != TFTeam_Red)
 		return;
-		
-	// Checks if the level is a Mann Vs Machine Map 
+
+	// Checks if the level is a Mann Vs Machine Map
 	if(!playing_mvm)
 		return;
 
@@ -117,7 +117,7 @@ void ApplyAttributesToClient(int client)
 
 	// Weapon attributes gets erased when changing weapons, only clear attributes from clients
 	TF2Attrib_RemoveAll(client);
-	
+
 	/** Universal Attributes */
 	TF2Attrib_SetByName(Melee, "critboost on kill", 4.0);
 	TF2Attrib_SetByName(Melee, "melee attack rate bonus", 0.6);
@@ -132,123 +132,147 @@ void ApplyAttributesToClient(int client)
 	TF2Attrib_SetByName(client, "dmg taken from blast reduced", 0.25);
 	TF2Attrib_SetByName(client, "max health additive bonus", 50.0);
 	TF2Attrib_SetByName(client, "ammo regen", 0.15);
-	
+
 	// For custom maps that allows recaptureable gates
 	TF2Attrib_SetByName(client, "increase player capture value", 1.0);
-	
+
 	switch (TF2_GetPlayerClass(client)) {
 		case TFClass_Scout: {
-			/** Scout Primary Attributes */
-			TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
-			TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			TF2Attrib_SetByName(Primary, "heal on kill", 25.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
+			if(Primary != -1){
+				/** Scout Primary Attributes */
+				TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
+				TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				TF2Attrib_SetByName(Primary, "heal on kill", 25.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
+			}
 			/** Scout Special Attributes */
 			// TF2Attrib_SetByName(Primary, "bullets per shot bonus", 1.5);
 			// TF2Attrib_SetByName(Primary, "scattergun knockback mult", 1.75);
 			// TF2Attrib_SetByName(Primary, "heal on hit for rapidfire", 5.0);
-			/** Scout Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			if(Secondary != -1){
+				/** Scout Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			}
 		}
 		case TFClass_Soldier: {
-			/** Soldier Primary Attributes */
-			TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			/** Soldier Special Attributes */
-			TF2Attrib_SetByName(Primary, "rocket specialist", 2.0);
-			TF2Attrib_SetByName(Primary, "clip size upgrade atomic", 8.0);
-			TF2Attrib_SetByName(Primary, "Projectile speed increased", 1.2);
-			/** Soldier Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			if(Primary != -1){
+				/** Soldier Primary Attributes */
+				TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				/** Soldier Special Attributes */
+				TF2Attrib_SetByName(Primary, "rocket specialist", 2.0);
+				TF2Attrib_SetByName(Primary, "clip size upgrade atomic", 8.0);
+				TF2Attrib_SetByName(Primary, "Projectile speed increased", 1.2);
+			}
+			if(Secondary != -1){
+				/** Soldier Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			}
 		}
 		case TFClass_Pyro: {
-			/** Pyro Primary Attributes */
-			TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			TF2Attrib_SetByName(Primary, "airblast pushback scale", 1.50);
-			/** Pyro Special Attributes */
-			TF2Attrib_SetByName(Primary, "mult airblast refire time", 0.8);
-			/** Pyro Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			if(Primary != -1){
+				/** Pyro Primary Attributes */
+				TF2Attrib_SetByName(Primary, "damage bonus", 2.0);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(Primary, "airblast pushback scale", 1.50);
+				/** Pyro Special Attributes */
+				TF2Attrib_SetByName(Primary, "mult airblast refire time", 0.8);
+			}
+			if(Secondary != -1){
+				/** Pyro Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			}
 		}
 		case TFClass_DemoMan: {
-			/** DemoMan Primary Attributes */
-			TF2Attrib_SetByName(Primary, "damage bonus", 1.8);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);	
-			/** DemoMan Special Attributes */
-			TF2Attrib_SetByName(Primary, "clip size upgrade atomic", 8.0);
-			// Most AI will overshoot their pills if PSI is over 10%
-			TF2Attrib_SetByName(Primary, "Projectile speed increased", 1.1);
-			/** DemoMan Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "max pipebombs increased", 4.0);
-			TF2Attrib_SetByName(Secondary, "damage bonus", 2.2);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.7);
-			TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			if(Primary != -1){
+				/** DemoMan Primary Attributes */
+				TF2Attrib_SetByName(Primary, "damage bonus", 1.8);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				/** DemoMan Special Attributes */
+				TF2Attrib_SetByName(Primary, "clip size upgrade atomic", 8.0);
+				// Most AI will overshoot their pills if PSI is over 10%
+				TF2Attrib_SetByName(Primary, "Projectile speed increased", 1.1);
+			}
+			if(Secondary != -1){
+				/** DemoMan Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "max pipebombs increased", 4.0);
+				TF2Attrib_SetByName(Secondary, "damage bonus", 2.2);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.7);
+				TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			}
 		}
 		case TFClass_Heavy: {
-			/** HeavyWeapons Primary Attributes */
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);	
-			/** HeavyWeapons Special Attributes */
-			TF2Attrib_SetByName(Primary, "attack projectiles", 2.0);
-			TF2Attrib_SetByName(Primary, "projectile penetration heavy", 2.0);
-			TF2Attrib_SetByName(Primary, "minigun spinup time decreased", 0.8);
-			/** HeavyWeapons Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			if(Primary != -1){
+				/** HeavyWeapons Primary Attributes */
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				/** HeavyWeapons Special Attributes */
+				TF2Attrib_SetByName(Primary, "attack projectiles", 2.0);
+				TF2Attrib_SetByName(Primary, "projectile penetration heavy", 2.0);
+				TF2Attrib_SetByName(Primary, "minigun spinup time decreased", 0.8);
+			}
+			if(Secondary != -1){
+				/** HeavyWeapons Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Secondary, "faster reload rate", 0.4);
+			}
 		}
 		case TFClass_Engineer: {
 			TF2Attrib_SetByName(client, "metal regen", 30.0);
-			/** Engineer Primary Attributes */
-			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			/** Engineer Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			if(Primary != -1){
+				/** Engineer Primary Attributes */
+				TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+			}
+			if(Secondary != -1){
+				/** Engineer Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			}
 			/** Engineer PDA Attributes */
 			int iPDA = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Unknown2, true);
 			if(iPDA != -1)
@@ -262,38 +286,45 @@ void ApplyAttributesToClient(int client)
 			}
 		}
 		case TFClass_Medic: {
-			/** Medic Primary Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.15);
-			TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 3.0);
-			TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			/** Medic Special Attributes */
-			TF2Attrib_SetByName(Primary, "mad milk syringes", 1.0);
-			/** Medic Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "ubercharge rate bonus", 2.0);
-			TF2Attrib_SetByName(Secondary, "heal rate bonus", 1.5);
-			TF2Attrib_SetByName(Secondary, "overheal expert", 3.0);
-			TF2Attrib_SetByName(Secondary, "healing mastery", 3.0);
-			TF2Attrib_SetByName(Secondary, "uber duration bonus", 6.0);
+			if(Primary != -1){
+				/** Medic Primary Attributes */
+				TF2Attrib_SetByName(Primary, "clip size bonus upgrade", 3.0);
+				TF2Attrib_SetByName(Primary, "fire rate bonus", 0.6);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				/** Medic Special Attributes */
+				TF2Attrib_SetByName(Primary, "mad milk syringes", 1.0);
+			}
+			if(Secondary != -1){
+				/** Medic Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "ubercharge rate bonus", 2.0);
+				TF2Attrib_SetByName(Secondary, "heal rate bonus", 1.5);
+				TF2Attrib_SetByName(Secondary, "overheal expert", 3.0);
+				TF2Attrib_SetByName(Secondary, "healing mastery", 3.0);
+				TF2Attrib_SetByName(Secondary, "uber duration bonus", 6.0);
+			}
 		}
 		case TFClass_Sniper: {
-			/** Sniper Primary Attributes */
-			TF2Attrib_SetByName(Primary, "damage bonus", 1.75);
-			TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
-			TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
-			/** Sniper Special Attributes */
-			TF2Attrib_SetByName(Primary, "explosive sniper shot", 3.0);
-			TF2Attrib_SetByName(Primary, "SRifle Charge rate increased", 1.5);
-			/** Sniper Secondary Attributes */
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 3.0);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			if(Primary != -1){
+				/** Sniper Primary Attributes */
+				TF2Attrib_SetByName(Primary, "damage bonus", 1.75);
+				TF2Attrib_SetByName(Primary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Primary, "maxammo primary increased", 2.5);
+				TF2Attrib_SetByName(Primary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Primary, "faster reload rate", 0.4);
+				/** Sniper Special Attributes */
+				TF2Attrib_SetByName(Primary, "explosive sniper shot", 3.0);
+				TF2Attrib_SetByName(Primary, "SRifle Charge rate increased", 1.5);
+			}
+			if(Secondary != -1){
+				/** Sniper Secondary Attributes */
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 3.0);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 100.0);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.6);
+			}
 		}
 		case TFClass_Spy: {
 			/**
@@ -301,19 +332,21 @@ void ApplyAttributesToClient(int client)
 			* The primary slot (slot 0) is EMPTY!
 			* The revolver is a secondary weapon.
 			**/
-			/** Spy Revolver Attributes */
-			TF2Attrib_SetByName(Secondary, "damage bonus", 1.25);
-			TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.75);
-			TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
-			TF2Attrib_SetByName(Secondary, "heal on kill", 50.0);
-			TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
-			TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+			if(Secondary != -1){
+				/** Spy Revolver Attributes */
+				TF2Attrib_SetByName(Secondary, "damage bonus", 1.25);
+				TF2Attrib_SetByName(Secondary, "fire rate bonus", 0.75);
+				TF2Attrib_SetByName(Secondary, "projectile penetration", 1.0);
+				TF2Attrib_SetByName(Secondary, "heal on kill", 50.0);
+				TF2Attrib_SetByName(Secondary, "maxammo secondary increased", 2.5);
+				TF2Attrib_SetByName(Secondary, "clip size bonus upgrade", 2.0);
+			}
 			/** Spy Special Attributes */
 			TF2Attrib_SetByName(Melee, "cloak consume rate decreased", 0.3);
 			TF2Attrib_SetByName(Melee, "armor piercing", 100.0);
 
 			int iSapper = TF2_GetPlayerLoadoutSlot(client, TF2LoadoutSlot_Building, true);
-			if(iSapper != -1) 
+			if(iSapper != -1)
 			{
 				TF2Attrib_SetByName(iSapper, "robo sapper", 3.0);
 				TF2Attrib_SetByName(iSapper, "effect bar recharge rate increased", 0.6);
@@ -432,7 +465,7 @@ void ApplyAttributesToClient(int client)
 			TF2Attrib_SetByName(Flaregun, "faster reload rate", 0.4);
 		}
 	}
-	
+
 	int DemoShield = -1;
 	while ((DemoShield = FindEntityByClassname(DemoShield, "TF_WEARABLE_DEMOSHIELD")) != -1)
 	{
