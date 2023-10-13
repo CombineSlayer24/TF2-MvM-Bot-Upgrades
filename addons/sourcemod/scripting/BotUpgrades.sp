@@ -106,8 +106,8 @@ public void OnPluginStart()
 {
 	//Come up with better ConVar names....
 	tf_mvm_sentry_infammo = CreateConVar( "sm_tf_mvm_sentry_infammo", "1", "Should we enable Infinite Ammo for BOT/Player Engineer Sentryguns?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
-	tf_mvm_sentry_infammo_player = CreateConVar( "sm_tf_mvm_sentry_infammo_player", "1", "Should Player Engineers be affected with Infinite Ammo?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
-	tf_mvm_upgrades_player = CreateConVar( "sm_tf_tf_mvm_upgrades_playerr", "1", "Should Players get upgrades as well?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
+	tf_mvm_sentry_infammo_player = CreateConVar( "sm_tf_mvm_sentry_infammo_player", "0", "Should Player Engineers be affected with Infinite Ammo?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
+	tf_mvm_upgrades_player = CreateConVar( "sm_tf_tf_mvm_upgrades_player", "0", "Should Players get upgrades as well?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 
 	//HookEvent( "post_inventory_application", Event_PostInventory, EventHookMode_Post );
 	HookEvent( "mvm_begin_wave", Event_WaveStart, EventHookMode_Post );
