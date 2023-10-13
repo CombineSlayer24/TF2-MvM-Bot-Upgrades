@@ -6,7 +6,7 @@
 #define REQUIRE_PLUGIN 
 #include <tf2attributes> // nosoop's Attributes ( https://github.com/nosoop/tf2attributes )
 #include <tf2wearables> // use tf2 wearables API for getting weapon entity index ( https://github.com/nosoop/sourcemod-tf2wearables/ )
-#include <tf2utils>
+//#include <tf2utils>
 
 #define TF_SPECIAL_ATTRIB_WEAPONS 10
 #define TF_SENTRYGUN_AMMO_150 150
@@ -514,12 +514,8 @@ void ApplyAttributesToClient( int client )
 				{
 					for ( int j = 0; j < numAttributes[ i ]; j++ )
 					{
-						// Skip if the attribute is an empty string
-						if (StrEqual( attributes[ i ][ j ], "") )
-							continue;
-
-						// Skip if the client is not a fake client
-						if (StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client ) )
+						// Skip if the attribute is an empty string or if the client is not a fake client and the attribute is "grenade launcher mortar mode"
+						if ( StrEqual( attributes[ i ][ j ], "") || ( StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client )) )
 							continue;
 							
 						TF2Attrib_SetByName( iWeapon, attributes[ i ][ j ], attributeValues[ i ][ j ] );
