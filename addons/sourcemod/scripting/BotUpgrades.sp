@@ -98,7 +98,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Give bots on Red team upgrades for Mann Vs Machine.",
-	version = "1.2.7",
+	version = "1.2.9",
 	url = "N/A",
 };
 
