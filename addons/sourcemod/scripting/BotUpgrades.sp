@@ -8,6 +8,7 @@
 #include <tf2wearables> // use tf2 wearables API for getting weapon entity index ( https://github.com/nosoop/sourcemod-tf2wearables/ )
 #include <tf2utils>
 
+#define TF_SPECIAL_ATTRIB_WEAPONS 10
 #define TF_SENTRYGUN_AMMO_150 150
 #define TF_SENTRYGUN_AMMO_200 200
 #define TF_SENTRYGUN_AMMO_ROCKETS 20
@@ -34,6 +35,62 @@ char botModels[][] =
 	"models/bots/demo_boss/bot_demo_boss.mdl",
 	"models/bots/heavy_boss/bot_heavy_boss.mdl",
 	"models/bots/pyro_boss/bot_pyro_boss.mdl"
+};
+
+char weapons[ TF_SPECIAL_ATTRIB_WEAPONS ][ 64 ] = 
+{
+	"TF_WEAPON_PARTICLE_CANNON", 
+	"TF_WEAPON_CANNON", 
+	"TF_WEAPON_COMPOUND_BOW", 
+	"TF_WEAPON_LUNCHBOX_DRINK", 
+	"TF_WEAPON_BUFF_ITEM", 
+	"TF_WEAPON_JAR", 
+	"TF_WEAPON_JAR_MILK", 
+	"TF_WEAPON_JAR_GAS", 
+	"TF_WEARABLE_DEMOSHIELD", 
+	"TF_WEAPON_BAT_WOOD"
+};
+
+char attributes[ 10 ][ 2 ][ 64 ] =
+{
+	{ "Set DamageType Ignite", "clip size bonus upgrade" },                // TF_WEAPON_PARTICLE_CANNON
+	{ "grenade launcher mortar mode", "" },                                // TF_WEAPON_CANNON
+	{ "bleeding duration", "" },                                           // TF_WEAPON_COMPOUND_BOW
+	{ "effect bar recharge rate increased", "" },                          // TF_WEAPON_LUNCHBOX_DRINK
+	{ "increase buff duration", "" },                                      // TF_WEAPON_BUFF_ITEM
+	{ "effect bar recharge rate increased", "applies snare effect" },      // TF_WEAPON_JAR
+	{ "effect bar recharge rate increased", "applies snare effect" },      // TF_WEAPON_JAR_MILK
+	{ "mult_item_meter_charge_rate", "weapon burn dmg increased" },        // TF_WEAPON_JAR_GAS
+	{ "damage force reduction", "charge recharge rate increased" },        // TF_WEARABLE_DEMOSHIELD
+	{ "effect bar recharge rate increased", "mark for death" }             // TF_WEAPON_BAT_WOOD
+};
+
+float attributeValues[ 10 ][ 2 ] =
+{
+	{ 1.0, 3.0 },    // TF_WEAPON_PARTICLE_CANNON
+	{ 0.0 },         // TF_WEAPON_CANNON
+	{ 5.0 },         // TF_WEAPON_COMPOUND_BOW
+	{ 0.3 },         // TF_WEAPON_LUNCHBOX_DRINK
+	{ 1.5 },         // TF_WEAPON_BUFF_ITEM
+	{ 0.4, 0.65 },   // TF_WEAPON_JAR
+	{ 0.4, 0.65 },   // TF_WEAPON_JAR_MILK
+	{ 0.2, 4.0 },    // TF_WEAPON_JAR_GAS
+	{ 0.2, 5.0 },    // TF_WEARABLE_DEMOSHIELD
+	{ 0.2, 1.0 }     // TF_WEAPON_BAT_WOOD
+};
+
+int numAttributes[ 10 ] = 
+{
+	2,               // TF_WEAPON_PARTICLE_CANNON
+	1,               // TF_WEAPON_CANNON
+	1,               // TF_WEAPON_COMPOUND_BOW
+	1,               // TF_WEAPON_LUNCHBOX_DRINK
+	1,               // TF_WEAPON_BUFF_ITEM
+	2,               // TF_WEAPON_JAR
+	2,               // TF_WEAPON_JAR_MILK
+	2,               // TF_WEAPON_JAR_GAS
+	2,               // TF_WEARABLE_DEMOSHIELD
+	2                // TF_WEAPON_BAT_WOOD
 };
 
 public Plugin myinfo = 
@@ -448,80 +505,24 @@ void ApplyAttributesToClient( int client )
 			}
 		}
 
-		// While it's somewhat better, it could still be polished
-		// by not having some of the Secondary attributes be applied
-		// i.e, having Mad Milk get the Damage bonus and others from
-		// the scout's Secondary attributes being applied
-
-		char weapons[ 10 ][ 64 ] = 
+		for (int i = 0; i < TF_SPECIAL_ATTRIB_WEAPONS; i++) 
 		{
-			"TF_WEAPON_PARTICLE_CANNON", 
-			"TF_WEAPON_CANNON", 
-			"TF_WEAPON_COMPOUND_BOW", 
-			"TF_WEAPON_LUNCHBOX_DRINK", 
-			"TF_WEAPON_BUFF_ITEM", 
-			"TF_WEAPON_JAR", 
-			"TF_WEAPON_JAR_MILK", 
-			"TF_WEAPON_JAR_GAS", 
-			"TF_WEARABLE_DEMOSHIELD", 
-			"TF_WEAPON_BAT_WOOD"
-		};
-
-		for ( int i = 0; i < 10; i++ )
-		{
-			int weapon = -1;
-			while ( ( weapon = FindEntityByClassname( weapon, weapons[ i ] ) ) != -1 )
+			int iWeapon = -1;
+			while ( ( iWeapon = FindEntityByClassname( iWeapon, weapons[ i ] ) ) != -1 ) 
 			{
-				if ( client == GetEntPropEnt( weapon, Prop_Data, "m_hOwnerEntity" ) )
+				if ( client == GetEntPropEnt( iWeapon, Prop_Data, "m_hOwnerEntity" ) ) 
 				{
-					if ( StrEqual( weapons[ i ], "TF_WEAPON_PARTICLE_CANNON" ) )
+					for ( int j = 0; j < numAttributes[ i ]; j++ )
 					{
-						TF2Attrib_SetByName( weapon, "Set DamageType Ignite", 1.0 );
-						TF2Attrib_SetByName( weapon, "clip size bonus upgrade", 3.0 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_CANNON" ) )
-					{
-						// Bots need this, or they cannot fire it
-						// Players don't.
-						if ( IsFakeClient( client ) )
-							TF2Attrib_SetByName( weapon, "grenade launcher mortar mode", 0.0 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_COMPOUND_BOW" ) )
-					{
-						TF2Attrib_SetByName( weapon, "bleeding duration", 5.0 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_LUNCHBOX_DRINK" ) )
-					{
-						TF2Attrib_SetByName( weapon, "effect bar recharge rate increased", 0.3 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_BUFF_ITEM" ) )
-					{
-						TF2Attrib_SetByName( weapon, "increase buff duration", 1.5 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_JAR" ) )
-					{
-						TF2Attrib_SetByName( weapon, "effect bar recharge rate increased", 0.4 );
-						TF2Attrib_SetByName( weapon, "applies snare effect", 0.65 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_JAR_MILK" ) )
-					{
-						TF2Attrib_SetByName( weapon, "effect bar recharge rate increased", 0.4 );
-						TF2Attrib_SetByName( weapon, "applies snare effect", 0.65 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_JAR_GAS" ) )
-					{
-						TF2Attrib_SetByName( weapon, "mult_item_meter_charge_rate", 0.2 );
-						TF2Attrib_SetByName( weapon, "weapon burn dmg increased", 4.0 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEARABLE_DEMOSHIELD" ) )
-					{
-						TF2Attrib_SetByName( weapon, "damage force reduction", 0.2 );
-						TF2Attrib_SetByName( weapon, "charge recharge rate increased", 5.0 );
-					}
-					else if ( StrEqual( weapons[ i ], "TF_WEAPON_BAT_WOOD" ) )
-					{
-						TF2Attrib_SetByName( weapon, "effect bar recharge rate increased", 0.2 );
-						TF2Attrib_SetByName( weapon, "mark for death", 1.0 );
+						// Skip if the attribute is an empty string
+						if (StrEqual( attributes[ i ][ j ], "") )
+							continue;
+
+						// Skip if the client is not a fake client
+						if (StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client ) )
+							continue;
+							
+						TF2Attrib_SetByName( iWeapon, attributes[ i ][ j ], attributeValues[ i ][ j ] );
 					}
 				}
 			}
