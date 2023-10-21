@@ -98,7 +98,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Give bots on Red team upgrades for Mann Vs Machine.",
-	version = "1.2.9",
+	version = "1.3.0",
 	url = "N/A",
 };
 
@@ -107,7 +107,7 @@ public void OnPluginStart()
 	//Come up with better ConVar names....
 	tf_mvm_sentry_infammo = CreateConVar( "sm_tf_mvm_sentry_infammo", "1", "Should we enable Infinite Ammo for BOT/Player Engineer Sentryguns?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 	tf_mvm_sentry_infammo_player = CreateConVar( "sm_tf_mvm_sentry_infammo_player", "0", "Should Player Engineers be affected with Infinite Ammo?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
-	tf_mvm_upgrades_player = CreateConVar( "sm_tf_tf_mvm_upgrades_player", "0", "Should Players get upgrades as well?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
+	tf_mvm_upgrades_player = CreateConVar( "sm_tf_mvm_upgrades_player", "0", "Should Players get upgrades as well?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 
 	//HookEvent( "post_inventory_application", Event_PostInventory, EventHookMode_Post );
 	HookEvent( "mvm_begin_wave", Event_WaveStart, EventHookMode_Post );
@@ -122,7 +122,7 @@ public void OnMapStart()
 public Action OnPlayerRunCmd( int client, int& buttons, int& impulse, float vel[3], float angles[3], int& weapon, int& subtype, int& cmdnum, int& tickcount, int& seed, int mouse[2] )
 {
 	// Checks if the client is In-Game
-	if (!IsValidClientIndex( client ) || !IsPlayerAlive( client ) || IsRobot( client ) || TF2_GetClientTeam( client ) != TFTeam_Red || !bIsMvMMap)
+	if (!IsValidClientIndex( client ) || !IsPlayerAlive( client ) || IsRobot( client ) || TF2_GetClientTeam( client ) != TFTeam_Red || !bIsMvMMap )
 		return Plugin_Continue;
 
 	if ( tf_mvm_sentry_infammo.BoolValue )
@@ -272,7 +272,7 @@ void ApplyAttributesToClient( int client )
 		TF2Attrib_SetByName( client, "dmg taken from crit reduced", 0.2 );
 		TF2Attrib_SetByName( client, "dmg taken from blast reduced", 0.25 );
 		TF2Attrib_SetByName( client, "max health additive bonus", 25.0 );
-		TF2Attrib_SetByName( client, "ammo regen", 0.1 );
+		TF2Attrib_SetByName( client, "ammo regen", 0.12 );
 		TF2Attrib_SetByName( client, "increase player capture value", 1.0 ); // For custom maps that allows recaptureable gates
 
 		switch (TF2_GetPlayerClass(client)) 
@@ -515,7 +515,7 @@ void ApplyAttributesToClient( int client )
 					for ( int j = 0; j < numAttributes[ i ]; j++ )
 					{
 						// Skip if the attribute is an empty string or if the client is not a fake client and the attribute is "grenade launcher mortar mode"
-						if ( StrEqual( attributes[ i ][ j ], "") || ( StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client )) )
+						if ( StrEqual( attributes[ i ][ j ], "") || ( StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client ) ) )
 							continue;
 							
 						TF2Attrib_SetByName( iWeapon, attributes[ i ][ j ], attributeValues[ i ][ j ] );
