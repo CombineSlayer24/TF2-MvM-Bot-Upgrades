@@ -5,8 +5,7 @@
 #include <tf2_stocks>
 #define REQUIRE_PLUGIN 
 #include <tf2attributes> // nosoop's Attributes ( https://github.com/nosoop/tf2attributes )
-#include <tf2wearables> // use tf2 wearables API for getting weapon entity index ( https://github.com/nosoop/sourcemod-tf2wearables/ )
-//#include <tf2utils>
+#include <tf2utils>
 
 #define TF_SPECIAL_ATTRIB_WEAPONS 10
 #define TF_SENTRYGUN_AMMO_150 150
@@ -245,11 +244,11 @@ void ApplyAttributesToClient( int client )
 	if (!IsValidClientIndex( client ) || IsRobot( client ) || TF2_GetClientTeam( client ) != TFTeam_Red || !bIsMvMMap )
 		return;
 
-	int iPrimary = TF2_GetPlayerLoadoutSlot( client, TF2LoadoutSlot_Primary, true );
-	int iSecondary = TF2_GetPlayerLoadoutSlot( client, TF2LoadoutSlot_Secondary, true );
-	int iMelee = TF2_GetPlayerLoadoutSlot( client, TF2LoadoutSlot_Melee, true);
-	int iPDA = TF2_GetPlayerLoadoutSlot( client, TF2LoadoutSlot_Unknown2 );
-	int iSapper = TF2_GetPlayerLoadoutSlot( client, TF2LoadoutSlot_Building );
+	int iPrimary = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Primary, true );
+	int iSecondary = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Secondary, true );
+	int iMelee = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Melee, true);
+	int iPDA = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Item2 );
+	int iSapper = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Building );
 
 	if ( IsFakeClient( client ) || ( tf_mvm_upgrades_player.BoolValue ) )
 	{
