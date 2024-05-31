@@ -23,13 +23,13 @@ I wanted to improve it to be more flexible and have more variety (I guess?) with
 
 # Convars
 - sm_tf_mvm_sentry_infammo[1/0 - 1 default]
- - Should bot Sentryguns have unlimited ammo?
+  - Should bot Sentryguns have unlimited ammo?
 - sm_tf_mvm_sentry_infammo_player[1/0 - 0 default]
- - Should player Sentryguns have unlimited ammo?
+  - Should player Sentryguns have unlimited ammo?
 - sm_tf_mvm_upgrades_player [1/0 - 0 default]
- - Should players get upgrades?
+  - Should players get upgrades?
 - sm_tf_mvm_upgrades_bot [1/0 - 1 default]
- - Should bots get upgrades?
+  - Should bots get upgrades?
 
 # How does this work?
 When you your first download the requirements needed, you can start your server in a MvM map. Any bots that you add, TFBots (Default), or any Third-Party Bots like RCBots2, as long as it has BOT or the heavy-bot icon in the PING section. After 5 seconds from spawning/repsawning, they will receive upgrades to their weapons. And it's all done.  
