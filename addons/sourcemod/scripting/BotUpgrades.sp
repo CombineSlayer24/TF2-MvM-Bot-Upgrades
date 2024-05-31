@@ -4,7 +4,7 @@
 #include <sourcemod>
 #include <tf2_stocks>
 #define REQUIRE_PLUGIN 
-#include <tf2attributes> // nosoop's Attributes ( https://github.com/nosoop/tf2attributes )
+#include <tf2attributes>
 #include <tf2utils>
 
 #define TF_SPECIAL_ATTRIB_WEAPONS 10
@@ -15,6 +15,7 @@
 ConVar tf_mvm_sentry_infammo;
 ConVar tf_mvm_sentry_infammo_player;
 ConVar tf_mvm_upgrades_player;
+ConVar tf_mvm_upgrades_bot;
 
 bool bIsMvMMap = false;
 
@@ -33,9 +34,10 @@ char botModels[][] =
 	"models/bots/soldier_boss/bot_soldier_boss.mdl",
 	"models/bots/demo_boss/bot_demo_boss.mdl",
 	"models/bots/heavy_boss/bot_heavy_boss.mdl",
-	"models/bots/pyro_boss/bot_pyro_boss.mdl"
+	"models/bots/pyro_boss/bot_pyro_boss.mdl",
 };
 
+// I think there would've been a better way than this non-sense for these 4 stuff below
 char weapons[ TF_SPECIAL_ATTRIB_WEAPONS ][ 64 ] = 
 {
 	"TF_WEAPON_PARTICLE_CANNON", 
@@ -97,7 +99,7 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Give bots on Red team upgrades for Mann Vs Machine.",
-	version = "1.3.0",
+	version = "1.3.1",
 	url = "N/A",
 };
 
@@ -106,7 +108,8 @@ public void OnPluginStart()
 	//Come up with better ConVar names....
 	tf_mvm_sentry_infammo = CreateConVar( "sm_tf_mvm_sentry_infammo", "1", "Should we enable Infinite Ammo for BOT/Player Engineer Sentryguns?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 	tf_mvm_sentry_infammo_player = CreateConVar( "sm_tf_mvm_sentry_infammo_player", "0", "Should Player Engineers be affected with Infinite Ammo?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
-	tf_mvm_upgrades_player = CreateConVar( "sm_tf_mvm_upgrades_player", "0", "Should Players get upgrades as well?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
+	tf_mvm_upgrades_player = CreateConVar( "sm_tf_mvm_upgrades_player", "0", "Should Players get upgrades?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
+	tf_mvm_upgrades_bot = CreateConVar( "sm_tf_mvm_upgrades_bot", "1", "Should Bots get upgrades?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 
 	//HookEvent( "post_inventory_application", Event_PostInventory, EventHookMode_Post );
 	HookEvent( "mvm_begin_wave", Event_WaveStart, EventHookMode_Post );
@@ -244,13 +247,15 @@ void ApplyAttributesToClient( int client )
 	if (!IsValidClientIndex( client ) || IsRobot( client ) || TF2_GetClientTeam( client ) != TFTeam_Red || !bIsMvMMap )
 		return;
 
-	int iPrimary = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Primary, true );
-	int iSecondary = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Secondary, true );
-	int iMelee = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Melee, true);
-	int iPDA = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Item2 );
-	int iSapper = TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Building );
+	int iPrimary 	= TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Primary, true );
+	int iSecondary 	= TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Secondary, true );
+	int iMelee 		= TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Melee, true);
+	int iPDA 		= TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Item2 );
+	int iSapper 	= TF2Util_GetPlayerLoadoutEntity( client, TFWeaponSlot_Building );
 
-	if ( IsFakeClient( client ) || ( tf_mvm_upgrades_player.BoolValue ) )
+	// If we are a fake client and Bot upgrade convar is enabled...
+	// or we are a real player, give em upgrades.
+	if ( ( IsFakeClient( client ) && tf_mvm_upgrades_bot.BoolValue ) || ( !IsFakeClient( client ) && tf_mvm_upgrades_player.BoolValue ) )
 	{
 		// Weapon attributes gets erased when changing weapons, only clear attributes from clients
 		TF2Attrib_RemoveAll( client );
@@ -271,7 +276,7 @@ void ApplyAttributesToClient( int client )
 		TF2Attrib_SetByName( client, "dmg taken from crit reduced", 0.2 );
 		TF2Attrib_SetByName( client, "dmg taken from blast reduced", 0.25 );
 		TF2Attrib_SetByName( client, "max health additive bonus", 25.0 );
-		TF2Attrib_SetByName( client, "ammo regen", 0.12 );
+		TF2Attrib_SetByName( client, "ammo regen", 0.1 );
 		TF2Attrib_SetByName( client, "increase player capture value", 1.0 ); // For custom maps that allows recaptureable gates
 
 		switch (TF2_GetPlayerClass(client)) 

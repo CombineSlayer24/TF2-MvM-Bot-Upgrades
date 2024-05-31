@@ -3,21 +3,33 @@ A Team Fortress 2 Plugin that gives Bots (Fake Clients) attributes for MvM. This
 
 I wanted to improve it to be more flexible and have more variety (I guess?) with bots getting attributes, and to fix the issue were attributes would stack on each other if bots would swtich weapons. This plugin can be customizable via notepad or any editor.
 
-# Credits
+# Special Thanks
 * [pongo1231](https://github.com/pongo1231) [Original plugin]
 * [CombineSlayer24](https://github.com/CombineSlayer24) [For editing]
 * [caxanga334](https://github.com/caxanga334) [For editing, code help and more]
+* [Katsute](https://github.com/Katsute) [For PR commits]
+* [RussiaTails](https://github.com/RussiaTails) [For PR commits]
 
 # Requirements
 * [Sourcemod](https://www.sourcemod.net/) (You should already have this)
 * [Metamod](https://www.metamodsource.net/) (You should already have this)
-* [Nosoop's Attributes](https://github.com/nosoop/tf2attributes)
-* [TF2Wearables](https://github.com/nosoop/sourcemod-tf2wearables)
+* [TF2Attributes](https://github.com/FlaminSarge/tf2attributes)
+* [TF2Utils](https://github.com/nosoop/SM-TFUtils)
 
 # Optional Plugins (To enhance your experience)
 * [Give Bots Weapons](https://forums.alliedmods.net/showthread.php?t=287668) [Gives Bots random weapons,]
 * [Give Bots Cosmetics](https://forums.alliedmods.net/showthread.php?p=2456267) [Gives bots random cosmetics,]
 * [Force Bots ready up](https://forums.alliedmods.net/showthread.php?p=1792358) [Instead of waiting 150 seconds, you can make all bots ready up]
+
+# Convars
+- sm_tf_mvm_sentry_infammo[1/0 - 1 default]
+ - Should bot Sentryguns have unlimited ammo?
+- sm_tf_mvm_sentry_infammo_player[1/0 - 0 default]
+ - Should player Sentryguns have unlimited ammo?
+- sm_tf_mvm_upgrades_player [1/0 - 0 default]
+ - Should players get upgrades?
+- sm_tf_mvm_upgrades_bot [1/0 - 1 default]
+ - Should bots get upgrades?
 
 # How does this work?
 When you your first download the requirements needed, you can start your server in a MvM map. Any bots that you add, TFBots (Default), or any Third-Party Bots like RCBots2, as long as it has BOT or the heavy-bot icon in the PING section. After 5 seconds from spawning/repsawning, they will receive upgrades to their weapons. And it's all done.  
