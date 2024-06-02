@@ -99,13 +99,12 @@ public Plugin myinfo =
 	name = "[TF2] MvM Bot Upgrades",
 	author = "pongo1231 (Original) + Pyri (Edited) + Anonymous Player/caxanga334 (Edited)",
 	description = "Give bots on Red team upgrades for Mann Vs Machine.",
-	version = "1.3.1",
+	version = "1.3.2",
 	url = "N/A",
 };
 
 public void OnPluginStart() 
 {
-	//Come up with better ConVar names....
 	tf_mvm_sentry_infammo = CreateConVar( "sm_tf_mvm_sentry_infammo", "1", "Should we enable Infinite Ammo for BOT/Player Engineer Sentryguns?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 	tf_mvm_sentry_infammo_player = CreateConVar( "sm_tf_mvm_sentry_infammo_player", "0", "Should Player Engineers be affected with Infinite Ammo?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
 	tf_mvm_upgrades_player = CreateConVar( "sm_tf_mvm_upgrades_player", "0", "Should Players get upgrades?", FCVAR_NOTIFY, true, 0.0, true, 1.0 );
@@ -183,11 +182,12 @@ public Action Timer_PlayerSpawn( Handle timer, int userid )
 }
 
 // Check to see if the Client's model is a robot model, if true, we will disable them from getting attributes.
+// Mainly if servers have custom red bots via VScript or Rafmod.
 stock bool IsRobot( int client )
 {
-	if (IsValidClientIndex( client ) && IsPlayerAlive( client ) )
+	if ( IsValidClientIndex( client ) && IsPlayerAlive( client ) )
 	{
-		char model[PLATFORM_MAX_PATH]; GetClientModel( client, model, sizeof( model ) );
+		char model[ PLATFORM_MAX_PATH ]; GetClientModel( client, model, sizeof( model ) );
 		
 		for ( int i = 0; i < sizeof( botModels ); i++ )
 			if ( StrEqual( model, botModels[ i ], true ) )
@@ -215,18 +215,18 @@ stock void InfiniteSentryAmmo( int client )
 	int sentrygun = -1;
 	while ( ( sentrygun = FindEntityByClassname( sentrygun, "obj_sentrygun" ) ) != -1 )
 	{
-		if( !IsValidEntity( sentrygun ) || client != GetEntPropEnt( sentrygun, Prop_Send, "m_hBuilder" ) )
+		if ( !IsValidEntity( sentrygun ) || client != GetEntPropEnt( sentrygun, Prop_Send, "m_hBuilder" ) )
 			continue;
 
 		int isMini = GetEntProp( sentrygun, Prop_Send, "m_bMiniBuilding" );
 		int upgradeLevel = GetEntProp( sentrygun, Prop_Send, "m_iUpgradeLevel" );
 
-		if( isMini )
+		if ( isMini )
 			SetEntProp( sentrygun, Prop_Send, "m_iAmmoShells", TF_SENTRYGUN_AMMO_150 );
 
 		else //not a mini
 		{
-			switch (upgradeLevel)
+			switch ( upgradeLevel )
 			{
 				case 1: SetEntProp( sentrygun, Prop_Send, "m_iAmmoShells", TF_SENTRYGUN_AMMO_150 );
 				case 2:	SetEntProp( sentrygun, Prop_Send, "m_iAmmoShells", TF_SENTRYGUN_AMMO_200 );
@@ -243,7 +243,7 @@ stock void InfiniteSentryAmmo( int client )
 // This function will apply the attributes to the bots
 void ApplyAttributesToClient( int client )
 {
-	// Checks if the client is In-Game
+	// Checks if the client is In-Game, on Red Team and it's on a MvM map
 	if (!IsValidClientIndex( client ) || IsRobot( client ) || TF2_GetClientTeam( client ) != TFTeam_Red || !bIsMvMMap )
 		return;
 
@@ -277,9 +277,11 @@ void ApplyAttributesToClient( int client )
 		TF2Attrib_SetByName( client, "dmg taken from blast reduced", 0.25 );
 		TF2Attrib_SetByName( client, "max health additive bonus", 25.0 );
 		TF2Attrib_SetByName( client, "ammo regen", 0.1 );
-		TF2Attrib_SetByName( client, "increase player capture value", 1.0 ); // For custom maps that allows recaptureable gates
 
-		switch (TF2_GetPlayerClass(client)) 
+		// For custom maps that allows recaptureable gates
+		TF2Attrib_SetByName( client, "increase player capture value", 1.0 );
+
+		switch ( TF2_GetPlayerClass( client ) )
 		{
 			case TFClass_Scout: 
 			{
@@ -361,7 +363,8 @@ void ApplyAttributesToClient( int client )
 					TF2Attrib_SetByName( iPrimary, "faster reload rate", 0.4 );
 					TF2Attrib_SetByName( iPrimary, "maxammo primary increased", 2.5 );
 					TF2Attrib_SetByName( iPrimary, "clip size upgrade atomic", 8.0 );
-					//AI will overshoot their pills if PSI is over 10%
+					// AI will overshoot their pills if PSI is over 10%,
+					// do not go above 1.1.
 					TF2Attrib_SetByName( iPrimary, "Projectile speed increased", 1.1 );
 				}
 
@@ -519,7 +522,7 @@ void ApplyAttributesToClient( int client )
 					for ( int j = 0; j < numAttributes[ i ]; j++ )
 					{
 						// Skip if the attribute is an empty string or if the client is not a fake client and the attribute is "grenade launcher mortar mode"
-						if ( StrEqual( attributes[ i ][ j ], "") || ( StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client ) ) )
+						if ( StrEqual( attributes[ i ][ j ], "" ) || ( StrEqual( attributes[ i ][ j ], "grenade launcher mortar mode" ) && !IsFakeClient( client ) ) )
 							continue;
 							
 						TF2Attrib_SetByName( iWeapon, attributes[ i ][ j ], attributeValues[ i ][ j ] );
